@@ -46,20 +46,18 @@ intelbrief/
 
 ---
 
-## Step 1: Create a GitHub Account and Repository
+## Step 1:  Create a GitHub Account 
 
-1. Go to **github.com** → create a free account
-2. Click **"New repository"** (green button, top right)
-3. Name it: `intelbrief`
-4. Set to **Private**
-5. Check **"Add a README file"** (makes the next step easier)
-6. Click **"Create repository"**
+1. Create a GitHub account.
+2. Click the shared link
+3. Click the green button that says Use this template and proceed to create a new repository.
+4. Give the repository your own unique name and make it private. Proceed to create the repository.
 
 ---
 
 ## Step 2: Upload your personal contacts file
 
-The current file in the folder is a template file. Modify your personal contacts file to meet the same formatting standards and save it under contacts.xlsx. Delete the contacts template file in the data folder and replace it with your own personal one.
+The current contacts file in the data folder is a template file. Modify your personal contacts file to meet the same formatting standards and save it under contacts.xlsx. Delete the contacts template file in the data folder and replace it with your own personal one.
 
 
 ## Step 3: Get Your API Keys
