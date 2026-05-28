@@ -1,0 +1,43 @@
+# .github/workflows/intelbrief.yml
+#
+# GitHub reads this file and runs your agent automatically.
+# You never need to touch this after setup.
+
+name: IntelBrief Agent
+
+on:
+  schedule:
+    - cron: "0 11 * * 1"   # Monday    6 AM Central
+    - cron: "0 11 * * 3"   # Wednesday 6 AM Central
+    - cron: "0 11 * * 5"   # Friday    6 AM Central
+
+  # Lets you manually trigger a test run from GitHub's website
+  workflow_dispatch:
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        # This downloads your ENTIRE repo onto GitHub's machine —
+        # including data/contacts.xlsx. That's why the script can
+        # just read it like a normal file with no authentication.
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run IntelBrief
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          EXA_API_KEY:       ${{ secrets.EXA_API_KEY }}
+          SENDER_EMAIL:      ${{ secrets.SENDER_EMAIL }}
+          SENDER_PASSWORD:   ${{ secrets.SENDER_PASSWORD }}
+          RECIPIENT_EMAIL:   ${{ secrets.RECIPIENT_EMAIL }}
+        run: python src/agent.py
