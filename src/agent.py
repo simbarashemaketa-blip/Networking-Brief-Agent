@@ -3,11 +3,17 @@ IntelBrief Agent
 ----------------
 Reads your contacts Excel directly from the GitHub repository,
 searches for relevant market/company news per contact, then generates
-a personalized intel brief + draft outreach email for each one.
+A personalized intel brief + draft outreach email for each one.
 Delivers everything to your inbox.
 
 To update contacts: drag and drop a new Excel file into your
 GitHub repo (data/contacts.xlsx) — no other changes needed.
+
+SETUP:
+1. Fill in YOUR_NAME and YOUR_BACKGROUND below
+2. Add your API keys to GitHub Secrets (see README)
+3. Upload your contacts Excel to data/contacts.xlsx
+4. Run the workflow from the Actions tab
 """
 
 import os
@@ -21,7 +27,17 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-# ── Config ────────────────────────────────────────────────────────────────────
+# ── Personal Config — EDIT THESE TWO LINES ───────────────────────────────────
+
+YOUR_NAME = "Your Name"
+# One sentence describing your professional background.
+# This tells Claude who you are so it can tailor the brief and email tone.
+# Example: "a CRE financial analyst with 3 years of experience in multifamily
+# acquisitions and development underwriting across Sunbelt markets"
+YOUR_BACKGROUND = "a finance professional building a strategic network in your industry"
+
+
+# ── System Config — pulled from GitHub Secrets ───────────────────────────────
 
 ANTHROPIC_API_KEY = os.environ["ANTHROPIC_API_KEY"]
 EXA_API_KEY       = os.environ["EXA_API_KEY"]
@@ -139,9 +155,8 @@ def generate_brief_and_email(contact: dict, news: str) -> dict:
     company        = contact.get("company", "")
 
     prompt = f"""
-You are an assistant helping a CRE financial analyst named Simba prepare personalized outreach.
-Simba has 2 years of experience as a financial analyst with experience in industrial and MF acquisitions, fund analytics, and development
-underwriting across DFW and Sunbelt markets. He is building his network strategically and wants
+You are an assistant helping {YOUR_NAME} prepare personalized professional outreach.
+{YOUR_NAME} is {YOUR_BACKGROUND}. They are building their network strategically and want
 every message to add genuine value — not ask for anything.
 
 CONTACT INFORMATION:
@@ -160,19 +175,19 @@ YOUR TASK:
      Reference real numbers, company names, or market moves where available.
    - "so_what": 1-2 sentences explaining WHY this matters. Alternate perspective:
      sometimes "so what for the recipient" (how it affects their business/role),
-     sometimes "so what for Simba" (why this is a useful conversation hook or
+     sometimes "so what for {YOUR_NAME}" (why this is a useful conversation hook or
      signals a networking opportunity). Be direct and commercial — no fluff.
    - "source_url": the URL from the source that most directly supports this insight.
      Use the exact URL from the news text provided. If no URL applies, use "".
 
-2. Write a DRAFT EMAIL Simba can send to this contact. Rules:
+2. Write a DRAFT EMAIL {YOUR_NAME} can send to this contact. Rules:
    - Subject line: specific — reference something real from the news
    - Opening: reference the previous meeting naturally, not robotically
    - Body: share 1-2 specific insights directly relevant to THEIR world. Frame it
-     as Simba noticing something and thinking of them — not showing off.
+     as {YOUR_NAME} noticing something and thinking of them — not showing off.
    - NO ask. No "let's grab coffee." This email purely delivers value.
    - Closing: leave the door open naturally, one sentence.
-   - Tone: professional but human. Sharp junior colleague, not a sales rep.
+   - Tone: professional but human. Sharp colleague, not a sales rep.
    - Length: under 150 words total.
 
 Return ONLY valid JSON in this exact format, nothing else:
@@ -180,7 +195,7 @@ Return ONLY valid JSON in this exact format, nothing else:
   "brief_items": [
     {{
       "insight": "specific finding here",
-      "so_what": "why this matters — for them or for Simba",
+      "so_what": "why this matters — for them or for {YOUR_NAME}",
       "source_url": "https://..."
     }}
   ],
@@ -390,4 +405,3 @@ def run():
 
 if __name__ == "__main__":
     run()
-
