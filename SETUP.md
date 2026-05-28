@@ -57,31 +57,10 @@ intelbrief/
 
 ---
 
-## Step 2: Upload Your Files
+## Step 2: Upload your personal contacts file
 
-### Upload the code files
-1. In your repo, click **"Add file"** → **"Upload files"**
-2. Drag and drop everything from the ZIP *except* the `data/` folder:
-   - The `src/` folder
-   - The `requirements.txt` file
-   - The `.github/` folder
+The current file in the folder is a template file. Modify your personal contacts file to meet the same formatting standards and save it under contacts.xlsx. Delete the contacts template file in the data folder and replace it with your own personal one.
 
-   > **Mac users:** The `.github` folder is hidden by default. Press **Cmd+Shift+Period** in Finder to reveal hidden files before dragging.
-
-3. Click **"Commit changes"**
-
-### Create the data folder and upload your contacts
-GitHub can't create empty folders via drag-and-drop, so do this:
-
-1. Click **"Add file"** → **"Create new file"**
-2. In the filename box type: `data/contacts.xlsx`
-   - Typing the `/` automatically creates the folder
-3. GitHub will tell you it can't preview the file — that's fine
-4. Delete what you typed and instead use **"Upload files"** after navigating into `data/`
-
-**Easier method:** Click into your repo → navigate to where you want the file → **"Add file"** → **"Upload files"** → upload `contacts.xlsx` from the template provided.
-
----
 
 ## Step 3: Get Your API Keys
 
@@ -197,4 +176,6 @@ To change days/times, edit the `cron` lines in `.github/workflows/intelbrief.yml
 
 **Contacts not loading** — confirm the file is at `data/contacts.xlsx` exactly, and column names match the table above
 
-**Actions tab not showing the workflow** — confirm the `.github/workflows/intelbrief.yml` file uploaded correctly; the `.github` folder must be at the root of the repo
+**Actions tab not showing the workflow** — confirm the `.github/workflows/intelbrief.yml` file was uploaded correctly; the `.github` folder must be at the root of the repo
+
+Feel free to use Claude Code to get any help with this setup!
